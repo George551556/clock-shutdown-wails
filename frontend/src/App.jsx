@@ -1,7 +1,10 @@
 import {useState} from 'react';
 import logo from './assets/images/time-shutdown.ico';
 import './App.css';
-import {Greet} from "../wailsjs/go/main/App";
+import {
+    Greet,
+    HandlePowerOff,
+} from "../wailsjs/go/main/App";
 import {
     Button,
     Input,
@@ -15,18 +18,32 @@ import {
 
 function App() {
     const [val, setVal] = useState(2);
+    const [btnDisable, setBtnDisable] = useState(false);
     
-    const timeList = [1,2,5,10,30,60, '取消定时关机'];
+    const timeList = [2, 10, 30, 60, 120, -1];
 
     const dropItems = timeList.map((item) => ({
         key: item,
         label: (
             // 这里必须将setVal用匿名函数包裹, 否则会立即执行, 触发无限重复渲染
             <a onClick={()=>{setVal(item)}}> 
-                {item}
+                {item === -1 ? '取消定时关机' : item}
             </a>
         ),
     }))
+
+    const handlePowerOff = async () => {
+        setBtnDisable(true)
+        console.log('AABBBBBBBBA')
+        var ret = await HandlePowerOff(val)
+        console.log('AAAAAAAAA')
+        if ( ret !== ''){
+            message.error('执行错误: ' + ret)
+        }
+        setTimeout(() => {
+            setBtnDisable(false)
+        }, 1500);
+    }
     
 
     return (
@@ -36,7 +53,8 @@ function App() {
             >
                 <Input
                     style={{
-                        width: '40%',
+                        width: '55%',
+                        backgroundColor: '#fff'
                     }}
                     placeholder='请输入'
                     type='number'
@@ -44,32 +62,19 @@ function App() {
                     onChange={(e) => {
                         setVal(e.target.value)
                     }}
+                    addonAfter='分钟'
                 />
             </Dropdown>
-
-            {/* <Select
-                style={{
-                    width: '40%',
-                    marginTop: '10px',
-                }}
-                placeholder="Select a number"
-                onChange={(e) => {
-                    setVal(e);
-                }}
-                value={val}
-            >
-                {timeList.map((item) => {
-                    return <Select.Option key={item} value={item}>{item}</Select.Option>
-                })}
-            </Select> */}
             
             <Button
                 style={{
-                    marginTop: '10px',
+                    marginTop: '20px',
                     backgroundColor: 'transparent',
-                    width: '240px',
-                    height: '200px',
+                    width: '162px',
+                    height: '128px',
                 }}
+                onClick={handlePowerOff}
+                disabled={btnDisable}
             >
                 <img src={logo} alt="logoaaa" style={{width: '100%', height: '100%'}} />
             </Button>

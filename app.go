@@ -1,6 +1,7 @@
 package main
 
 import (
+	"clock-shutdown-wails/utils"
 	"context"
 	"fmt"
 )
@@ -24,4 +25,12 @@ func (a *App) startup(ctx context.Context) {
 // Greet returns a greeting for the given name
 func (a *App) Greet(name string) string {
 	return fmt.Sprintf("Hello %s, It's show time!", name)
+}
+
+func (a *App) HandlePowerOff(min int) string {
+	err := utils.PowerOff(min)
+	if err != nil {
+		return err.Error()
+	}
+	return ""
 }
