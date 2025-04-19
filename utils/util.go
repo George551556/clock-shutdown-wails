@@ -8,7 +8,7 @@ import (
 )
 
 func PowerOff(min int) error {
-	if min < 0 {
+	if min <= 0 {
 		cmd := exec.Command("shutdown", "-a")
 
 		// 关键：设置不弹出黑框

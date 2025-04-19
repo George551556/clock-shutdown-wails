@@ -3,4 +3,4 @@
 
 export function Greet(arg1:string):Promise<string>;
 
-export function HandlePowerOff(arg1:number):Promise<string>;
+export function HandlePowerOff(arg1:string):Promise<string>;

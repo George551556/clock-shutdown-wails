@@ -4,6 +4,7 @@ import (
 	"clock-shutdown-wails/utils"
 	"context"
 	"fmt"
+	"strconv"
 )
 
 // App struct
@@ -27,9 +28,15 @@ func (a *App) Greet(name string) string {
 	return fmt.Sprintf("Hello %s, It's show time!", name)
 }
 
-func (a *App) HandlePowerOff(min int) string {
-	err := utils.PowerOff(min)
+func (a *App) HandlePowerOff(min string) string {
+	num, err := strconv.Atoi(min)
 	if err != nil {
+		fmt.Println("Error:", err.Error())
+		return err.Error()
+	}
+	err = utils.PowerOff(num)
+	if err != nil {
+		fmt.Println("Error:", err.Error())
 		return err.Error()
 	}
 	return ""

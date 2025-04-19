@@ -1,15 +1,14 @@
 import {useState} from 'react';
 import logo from './assets/images/time-shutdown.ico';
 import './App.css';
+import {Quit} from "../wailsjs/runtime/runtime"
 import {
-    Greet,
     HandlePowerOff,
 } from "../wailsjs/go/main/App";
 import {
     Button,
     Input,
     message,
-    Select,
     Dropdown,
 } from "antd";
 import {
@@ -34,15 +33,20 @@ function App() {
 
     const handlePowerOff = async () => {
         setBtnDisable(true)
-        console.log('AABBBBBBBBA')
-        var ret = await HandlePowerOff(val)
-        console.log('AAAAAAAAA')
-        if ( ret !== ''){
-            message.error('执行错误: ' + ret)
-        }
         setTimeout(() => {
             setBtnDisable(false)
-        }, 1500);
+        }, 1900);
+        let value = val.toString()
+        var ret = await HandlePowerOff(value)
+        if ( ret !== ''){
+            message.error('执行错误: ' + ret)
+        }else{
+            let timer = 3000
+            message.info('即将在'+ Number(timer/1000) + '秒后自动退出')
+            setTimeout(() => {
+                Quit()
+            }, timer);
+        }        
     }
     
 
