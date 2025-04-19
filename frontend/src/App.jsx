@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import logo from './assets/images/time-shutdown.ico';
 import './App.css';
-import {Quit} from "../wailsjs/runtime/runtime"
+import {Quit, WindowMinimise} from "../wailsjs/runtime/runtime"
 import {
     HandlePowerOff,
 } from "../wailsjs/go/main/App";
@@ -19,7 +19,7 @@ function App() {
     const [val, setVal] = useState(2);
     const [btnDisable, setBtnDisable] = useState(false);
     
-    const timeList = [2, 10, 30, 60, 120, -1];
+    const timeList = [2, 10, 20, 60, 120, -1];
 
     const dropItems = timeList.map((item) => ({
         key: item,
@@ -41,7 +41,10 @@ function App() {
         if ( ret !== ''){
             message.error('执行错误: ' + ret)
         }else{
-            let timer = 3000
+            let timer = 12000
+            setTimeout(() => {
+                WindowMinimise();
+            }, 1000);
             message.info('即将在'+ Number(timer/1000) + '秒后自动退出')
             setTimeout(() => {
                 Quit()
