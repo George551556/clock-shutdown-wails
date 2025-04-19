@@ -3,12 +3,19 @@ package utils
 import (
 	"fmt"
 	"os/exec"
+	"syscall"
 	"time"
 )
 
 func PowerOff(min int) error {
 	if min < 0 {
 		cmd := exec.Command("shutdown", "-a")
+
+		// 关键：设置不弹出黑框
+		cmd.SysProcAttr = &syscall.SysProcAttr{
+			HideWindow: true,
+		}
+
 		ret, err := cmd.CombinedOutput()
 		if err != nil {
 			if err.Error() == "exit status 1116" {
@@ -22,6 +29,12 @@ func PowerOff(min int) error {
 	}
 	sec := 60 * min
 	cmd := exec.Command("shutdown", "-s", "-t", fmt.Sprintf("%d", sec))
+
+	// 关键：设置不弹出黑框
+	cmd.SysProcAttr = &syscall.SysProcAttr{
+		HideWindow: true,
+	}
+
 	ret, err := cmd.CombinedOutput()
 	if err != nil {
 		if err.Error() == "exit status 1190" {
