@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useState, useEffect } from 'react';
 import logo from './assets/images/time-shutdown.ico';
 import './App.css';
 import {Quit, WindowMinimise} from "../wailsjs/runtime/runtime"
@@ -10,6 +10,7 @@ import {
     Input,
     message,
     Dropdown,
+    Menu,
 } from "antd";
 import {
     PoweroffOutlined,
@@ -18,8 +19,38 @@ import {
 function App() {
     const [val, setVal] = useState(2);
     const [btnDisable, setBtnDisable] = useState(false);
-    
+    const [isNormalIcon, setisNormalIcon] = useState(true);
     const timeList = [2, 10, 20, 60, 120, -1];
+
+    useEffect(() => {
+        // 组件挂载后执行一次
+        const saveVal = localStorage.getItem('isNormalIcon');
+        if (saveVal !== null) {
+            setisNormalIcon(saveVal === 'true')
+        }
+    }, []);
+
+    const setStorage = (key, value) => {
+        localStorage.setItem(key, value)
+    }
+    
+    const rightClickMenu = (
+        <Menu
+            onClick={({ key }) => {
+                if (key === "toggle") {
+                    const newVal = !isNormalIcon;
+                    setisNormalIcon( isNormalIcon => !isNormalIcon);
+                    setStorage("isNormalIcon", newVal.toString());
+                }
+            }}
+            items={[
+                {
+                    key: 'toggle',
+                    label: '切换按钮样式',
+                }
+            ]}
+        />
+    );
 
     const dropItems = timeList.map((item) => ({
         key: item,
@@ -73,18 +104,34 @@ function App() {
                 />
             </Dropdown>
             
-            <Button
-                style={{
-                    marginTop: '20px',
-                    backgroundColor: 'transparent',
-                    width: '162px',
-                    height: '128px',
-                }}
-                onClick={handlePowerOff}
-                disabled={btnDisable}
-            >
-                <img src={logo} alt="logoaaa" style={{width: '100%', height: '100%'}} />
-            </Button>
+            <Dropdown overlay={rightClickMenu} trigger={['contextMenu']}>
+                {isNormalIcon ? (
+                    <Button
+                        style={{
+                            marginTop: '20px',
+                            backgroundColor: 'transparent',
+                            width: '162px',
+                            height: '128px',
+                        }}
+                        onClick={handlePowerOff}
+                        disabled={btnDisable}
+                        icon={<PoweroffOutlined style={{ fontSize: '600%' }} />}
+                    />
+                ) : (
+                    <Button
+                        style={{
+                            marginTop: '20px',
+                            backgroundColor: 'transparent',
+                            width: '162px',
+                            height: '128px',
+                        }}
+                        onClick={handlePowerOff}
+                        disabled={btnDisable}
+                    >
+                        <img src={logo} alt="logoaaa" style={{ width: '80%', height: '80%' }} />
+                    </Button>
+                )}
+            </Dropdown>
         </div>
     )
 }
