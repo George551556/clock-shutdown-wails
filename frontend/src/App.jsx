@@ -33,24 +33,18 @@ function App() {
     const setStorage = (key, value) => {
         localStorage.setItem(key, value)
     }
-    
-    const rightClickMenu = (
-        <Menu
-            onClick={({ key }) => {
-                if (key === "toggle") {
-                    const newVal = !isNormalIcon;
-                    setisNormalIcon( isNormalIcon => !isNormalIcon);
-                    setStorage("isNormalIcon", newVal.toString());
-                }
-            }}
-            items={[
-                {
-                    key: 'toggle',
-                    label: '切换按钮样式',
-                }
-            ]}
-        />
-    );
+
+    const rightClickMenu = [
+        {
+            key: 'toggle',
+            label: '切换按钮样式',
+            onClick: () => {
+                const newVal = !isNormalIcon
+                setisNormalIcon(isNormalIcon => !isNormalIcon)
+                setStorage('isNormalIcon', newVal.toString())
+            }
+        },
+    ]
 
     const dropItems = timeList.map((item) => ({
         key: item,
@@ -104,7 +98,12 @@ function App() {
                 />
             </Dropdown>
             
-            <Dropdown overlay={rightClickMenu} trigger={['contextMenu']}>
+            <Dropdown
+                menu={{
+                    items: rightClickMenu,
+                }}
+                trigger={['contextMenu']}
+            >
                 {isNormalIcon ? (
                     <Button
                         style={{
