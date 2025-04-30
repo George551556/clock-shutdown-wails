@@ -11,6 +11,7 @@ import {
     message,
     Dropdown,
     Menu,
+    Progress,
 } from "antd";
 import {
     PoweroffOutlined,
@@ -20,6 +21,8 @@ function App() {
     const [val, setVal] = useState(2);
     const [btnDisable, setBtnDisable] = useState(false);
     const [isNormalIcon, setisNormalIcon] = useState(true);
+    const [percent, setPercent] = useState(0);
+    const [isShowProgress, setIsShowProgress] = useState(false);
     const timeList = [2, 10, 20, 60, 120, -1];
 
     useEffect(() => {
@@ -66,11 +69,16 @@ function App() {
         if ( ret !== ''){
             message.error('执行错误: ' + ret)
         }else{
+            setIsShowProgress(true);
             let timer = 12000
+            message.info('即将在'+ Number(timer/1000) + '秒后自动退出')
+
+            setInterval(() => {
+                setPercent(percent => percent + 1)
+            }, (timer-1000)*0.97/100)
             setTimeout(() => {
                 WindowMinimise();
             }, 1000);
-            message.info('即将在'+ Number(timer/1000) + '秒后自动退出')
             setTimeout(() => {
                 Quit()
             }, timer);
@@ -131,6 +139,7 @@ function App() {
                     </Button>
                 )}
             </Dropdown>
+            <Progress percent={percent} showInfo={false} style={{width: '65%', visibility: isShowProgress ? 'visible' : 'hidden'}} />
         </div>
     )
 }
