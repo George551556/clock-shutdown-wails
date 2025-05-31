@@ -31,6 +31,12 @@ function App() {
         if (saveVal !== null) {
             setisNormalIcon(saveVal === 'true')
         }
+
+        // 读取本地存储的定时时间
+        var timeVal = localStorage.getItem('timedClock')
+        if (timeVal!==undefined && timeVal>0){
+            setVal(timeVal)
+        }
     }, []);
 
     const setStorage = (key, value) => {
@@ -64,6 +70,12 @@ function App() {
         setTimeout(() => {
             setBtnDisable(false)
         }, 1900);
+
+        // 本地存储定时时间
+        if (val>0) {
+            setStorage('timedClock', val)
+        }
+
         let value = val.toString()
         var ret = await HandlePowerOff(value)
         if ( ret !== ''){
