@@ -1,4 +1,4 @@
-import {useState, useEffect } from 'react';
+import React, {useState, useEffect, useRef } from 'react';
 import logo from './assets/images/time-shutdown.ico';
 import './App.css';
 import {Quit, WindowMinimise} from "../wailsjs/runtime/runtime"
@@ -108,11 +108,13 @@ function App() {
                         width: '55%',
                         backgroundColor: '#fff'
                     }}
-                    placeholder='请输入'
                     type='number'
                     value={val}
                     onChange={(e) => {
                         setVal(e.target.value)
+                    }}
+                    onClick={(e) => {
+                        e.target.select();
                     }}
                     addonAfter='分钟'
                 />
