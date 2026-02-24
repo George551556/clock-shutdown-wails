@@ -1,19 +1,47 @@
-# README
+# Clock Shutdown
 
-## About
+一个简洁易用的 Windows 定时关机工具，基于 Wails 框架开发。
 
-This is the official Wails React template.
+## 功能特性
 
-You can configure the project by editing `wails.json`. More information about the project settings can be found
-here: https://wails.io/docs/reference/project-config
+- **灵活的延迟设置** - 轻松设定关机延迟时间，避免仓促做出决定
+- **防遗忘保障** - 工作或游戏结束后突然想起有事？只需增加延迟时间，无需重新启动关机流程
+- **现代化界面** - 简洁直观的图形化界面，比控制台命令更易使用
+- **按钮样式切换** - 支持多种按钮样式，个性化定制界面外观
 
-## Live Development
+## 使用场景
 
-To run in live development mode, run `wails dev` in the project directory. This will run a Vite development
-server that will provide very fast hot reload of your frontend changes. If you want to develop in a browser
-and have access to your Go methods, there is also a dev server that runs on http://localhost:34115. Connect
-to this in your browser, and you can call your Go code from devtools.
+- 工作日结束时延迟关机，给自己反应时间
+- 游戏会话后有序关闭系统
+- 日常工作中临时调整关机计划
+- 避免因仓促关机导致忘记保存重要数据
 
-## Building
+## 技术栈
 
-To build a redistributable, production mode package, use `wails build`.
+- **后端**: Go
+- **前端**: React + Vite
+- **框架**: Wails (Go + JavaScript 桌面应用框架)
+
+## 开发
+
+### 实时开发模式
+
+在项目目录运行以下命令进入实时开发模式：
+
+```bash
+wails dev
+```
+
+Vite 开发服务器将提供前端代码的快速热重载。开发服务器运行在 `http://localhost:34115`，支持直接调用 Go 方法。
+
+### 构建
+
+生成生产环境可分发的安装包：
+
+```bash
+wails build
+```
+
+## 项目配置
+
+可通过编辑 `wails.json` 配置项目设置。详细文档请查看 [Wails 项目配置文档](https://wails.io/docs/reference/project-config)

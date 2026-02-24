@@ -17,7 +17,7 @@ func main() {
 
 	// Create application with options
 	err := wails.Run(&options.App{
-		Title:  "clock-shutdown-wails",
+		Title:  "定时关机",
 		Width:  int(300 * 9 / 10),
 		Height: int(350 * 9 / 10),
 		AssetServer: &assetserver.Options{
