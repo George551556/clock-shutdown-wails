@@ -45,3 +45,8 @@ wails build
 ## 项目配置
 
 可通过编辑 `wails.json` 配置项目设置。详细文档请查看 [Wails 项目配置文档](https://wails.io/docs/reference/project-config)
+
+## 外观展示
+![](img/image.png)  ![](img/image-1.png)
+
+![image-20260224094207345](img/image-20260224094207345.png) 
